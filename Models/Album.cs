@@ -6,7 +6,6 @@
         public string Title { get; set; }
         public DateTime ReleaseDate { get; set; }
         public virtual ICollection<Song> Songs { get; set; } = new HashSet<Song>();
-
         public Album()
         {
         }

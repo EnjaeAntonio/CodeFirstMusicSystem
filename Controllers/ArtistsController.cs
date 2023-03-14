@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CodeFirstMusicSystem.Data;
 using CodeFirstMusicSystem.Models;
+using CodeFirstMusicSystem.Models.Viewmodel;
 
 namespace CodeFirstMusicSystem.Controllers
 {
@@ -22,12 +23,27 @@ namespace CodeFirstMusicSystem.Controllers
         // GET: Artists
         public IActionResult Index()
         {
-            var artists = _context.Artist.Include(a => a.SongContributors)
-                                            .ThenInclude(sc => sc.Song)
-                                            .ThenInclude(s => s.Album)
-                                            .ToList();
+            var artists = _context.Artist.ToList();
             return View(artists);
         }
+
+        public IActionResult Albums(int id)
+        {
+            var artist = _context.Artist
+                .Include(a => a.Albums)
+                .ThenInclude(a => a.Songs)
+                .FirstOrDefault(a => a.Id == id);
+
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            var albums = artist.Albums.ToList();
+
+            return View(albums);
+        }
+
 
         // GET: Artists/Details/5
         public async Task<IActionResult> Details(int? id)

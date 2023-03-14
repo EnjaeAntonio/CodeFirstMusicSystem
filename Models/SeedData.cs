@@ -80,8 +80,6 @@ namespace CodeFirstMusicSystem.Models
             Song songNineteen = new Song("Drew Barrymore", 242, albumSix.Id);
             Song songTwenty = new Song("The Weekend", 268, albumSix.Id);
 
-
-
             if (!context.Song.Any())
             {
                 context.Song.Add(songOne);

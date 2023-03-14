@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CodeFirstMusicSystem.Data;
 using CodeFirstMusicSystem.Models;
+using CodeFirstMusicSystem.Models.Viewmodel;
 
 namespace CodeFirstMusicSystem.Controllers
 {
@@ -24,6 +25,31 @@ namespace CodeFirstMusicSystem.Controllers
         {
             var musicSystemContext = _context.Song.Include(s => s.Album);
             return View(await musicSystemContext.ToListAsync());
+        }
+
+
+        public ActionResult AddSongToPlaylist()
+        {
+            var viewModel = new AddSongViewModel
+            {
+                Playlists = _context.Playlist.ToList(),
+                Songs = _context.Song.ToList()
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddSongToPlaylist(AddSongViewModel viewModel)
+        {
+            var playlistSong = new PlaylistSong
+            {
+                SongId = viewModel.SongId,
+                PlaylistId = viewModel.PlaylistId
+            };
+            _context.PlaylistSong.Add(playlistSong);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Songs");
         }
 
         // GET: Songs/Details/5
@@ -44,7 +70,6 @@ namespace CodeFirstMusicSystem.Controllers
 
             return View(song);
         }
-
         // GET: Songs/Create
         public IActionResult Create()
         {

@@ -4,29 +4,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Artists</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Albums</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var artist in Model)
-        {
-            <tr>
-                <td>@artist.Name</td>
-                <td>
-                    <ul>
-                        @foreach (var songContributor in artist.SongContributors)
-                        {
-                            <li>@songContributor.Song.Album.Title</li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h1>Artists</h1>
+
+<ul>
+    @foreach (var artist in Model)
+    {
+        <li>
+            <a href="@Url.Action("Albums", new { id = artist.Id })">@artist.Name</a>
+        </li>
+    }
+</ul>
+
