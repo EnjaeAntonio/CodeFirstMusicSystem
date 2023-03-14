@@ -27,10 +27,36 @@ namespace CodeFirstMusicSystem.Controllers
             return View(artists);
         }
 
-        public IActionResult ListOfAlbums()
+
+        public IActionResult ListOfAlbums(int id)
         {
-            var albums = _context.Album.ToList();
-            return View(albums);
+
+            var artist = _context.Artist
+                  .Include(a => a.Albums)
+                  .SingleOrDefault(a => a.Id == id);
+            var albumsByArtist = _context.Album
+                    .Include(a => a.Songs)
+                    .ThenInclude(s => s.SongContributors)
+                    .ThenInclude(sc => sc.Artist)
+                    .Where(a => a.Songs
+                    .Any(s => s.SongContributors
+                    .Any(sc => sc.Artist.Id == id)))
+                    .ToList();
+
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new AlbumArtistViewModel
+            {
+                Artists = new List<Artist> { artist },
+                AlbumsByArtist = albumsByArtist,
+            };
+
+            return View(viewModel);
+
+
         }
 
         public IActionResult Albums(int id)
