@@ -38,9 +38,9 @@ namespace CodeFirstMusicSystem.Controllers
                 return NotFound();
             }
 
-            var songs = playlist.PlaylistSongs.Select(ps => ps.Song).ToList();
-            var totalRuntime = songs.Sum(s => s.DurationSeconds);
-            var songCount = songs.Count();
+            List<Song> songs = playlist.PlaylistSongs.Select(ps => ps.Song).ToList();
+            int totalRuntime = songs.Sum(s => s.DurationSeconds);
+            int songCount = songs.Count();
 
             PlaylistDetailsViewModel viewModel = new PlaylistDetailsViewModel
             {

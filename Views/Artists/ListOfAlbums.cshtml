@@ -1,11 +1,11 @@
-﻿@model IEnumerable<CodeFirstMusicSystem.Models.Song>
+﻿@model IEnumerable<CodeFirstMusicSystem.Models.Album>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ListOfAlbums";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>ListOfAlbums</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -17,10 +17,7 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DurationSeconds)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Album)
+                @Html.DisplayNameFor(model => model.ReleaseDate)
             </th>
             <th></th>
         </tr>
@@ -32,10 +29,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DurationSeconds)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album.Title)
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

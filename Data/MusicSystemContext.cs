@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CodeFirstMusicSystem.Models;
+using CodeFirstMusicSystem.Models.Viewmodel;
 
 namespace CodeFirstMusicSystem.Data
 {
@@ -25,5 +26,6 @@ namespace CodeFirstMusicSystem.Data
         public DbSet<CodeFirstMusicSystem.Models.Song> Song { get; set; }
 
         public DbSet<CodeFirstMusicSystem.Models.SongContributor> SongContributor { get; set; }
+
     }
 }

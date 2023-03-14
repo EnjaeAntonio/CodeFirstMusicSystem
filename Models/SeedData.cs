@@ -18,14 +18,14 @@ namespace CodeFirstMusicSystem.Models
 
             if (!context.Artist.Any())
             {
-                context.Artist.Add(artistOne);  
+                context.Artist.Add(artistOne);
                 context.Artist.Add(artistTwo);
                 context.Artist.Add(artistThree);
                 await context.SaveChangesAsync();
             }
 
 
-            if(!context.Artist.Any())
+            if (!context.Artist.Any())
             {
                 int test = artistOne.Id;
                 int testTwo = artistTwo.Id;

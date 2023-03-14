@@ -30,7 +30,7 @@ namespace CodeFirstMusicSystem.Controllers
 
         public ActionResult AddSongToPlaylist()
         {
-            var viewModel = new AddSongViewModel
+            AddSongViewModel viewModel = new AddSongViewModel
             {
                 Playlists = _context.Playlist.ToList(),
                 Songs = _context.Song.ToList()
@@ -41,7 +41,7 @@ namespace CodeFirstMusicSystem.Controllers
         [HttpPost]
         public ActionResult AddSongToPlaylist(AddSongViewModel viewModel)
         {
-            var playlistSong = new PlaylistSong
+            PlaylistSong playlistSong = new PlaylistSong
             {
                 SongId = viewModel.SongId,
                 PlaylistId = viewModel.PlaylistId

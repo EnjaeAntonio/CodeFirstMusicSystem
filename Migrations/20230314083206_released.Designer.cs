@@ -4,6 +4,7 @@ using CodeFirstMusicSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeFirstMusicSystem.Migrations
 {
     [DbContext(typeof(MusicSystemContext))]
-    partial class MusicSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230314083206_released")]
+    partial class released
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Album", (string)null);
+                    b.ToTable("Album");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.Artist", b =>
@@ -61,7 +63,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artist", (string)null);
+                    b.ToTable("Artist");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.Playlist", b =>
@@ -78,7 +80,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlist", (string)null);
+                    b.ToTable("Playlist");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.PlaylistSong", b =>
@@ -101,7 +103,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("SongId");
 
-                    b.ToTable("PlaylistSong", (string)null);
+                    b.ToTable("PlaylistSong");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.Song", b =>
@@ -126,7 +128,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("AlbumId");
 
-                    b.ToTable("Song", (string)null);
+                    b.ToTable("Song");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.SongContributor", b =>
@@ -149,7 +151,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("SongId");
 
-                    b.ToTable("SongContributor", (string)null);
+                    b.ToTable("SongContributor");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.Album", b =>

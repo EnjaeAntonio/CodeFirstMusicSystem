@@ -27,8 +27,15 @@ namespace CodeFirstMusicSystem.Controllers
             return View(artists);
         }
 
+        public IActionResult ListOfAlbums()
+        {
+            var albums = _context.Album.ToList();
+            return View(albums);
+        }
+
         public IActionResult Albums(int id)
         {
+            
             var artist = _context.Artist
                 .Include(a => a.Albums)
                 .ThenInclude(a => a.Songs)
@@ -39,9 +46,7 @@ namespace CodeFirstMusicSystem.Controllers
                 return NotFound();
             }
 
-            var albums = artist.Albums.ToList();
-
-            return View(albums);
+            return View(artist);
         }
 
 
