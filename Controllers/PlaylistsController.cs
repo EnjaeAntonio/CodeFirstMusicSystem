@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CodeFirstMusicSystem.Data;
 using CodeFirstMusicSystem.Models;
+using CodeFirstMusicSystem.Models.Viewmodel;
 
 namespace CodeFirstMusicSystem.Controllers
 {
@@ -28,19 +29,28 @@ namespace CodeFirstMusicSystem.Controllers
         // GET: Playlists/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Playlist == null)
-            {
-                return NotFound();
-            }
+            Playlist playlist = _context.Playlist.Include(p => p.PlaylistSongs)
+             .ThenInclude(ps => ps.Song)
+             .FirstOrDefault(p => p.Id == id);
 
-            var playlist = await _context.Playlist
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (playlist == null)
             {
                 return NotFound();
             }
 
-            return View(playlist);
+            var songs = playlist.PlaylistSongs.Select(ps => ps.Song).ToList();
+            var totalRuntime = songs.Sum(s => s.DurationSeconds);
+            var songCount = songs.Count();
+
+            PlaylistDetailsViewModel viewModel = new PlaylistDetailsViewModel
+            {
+                Playlist = playlist,
+                Songs = songs,
+                TotalRuntime = totalRuntime,
+                SongCount = songCount
+            };
+
+            return View(viewModel);
         }
 
         // GET: Playlists/Create
@@ -64,6 +74,8 @@ namespace CodeFirstMusicSystem.Controllers
             }
             return View(playlist);
         }
+
+
 
         // GET: Playlists/Edit/5
         public async Task<IActionResult> Edit(int? id)

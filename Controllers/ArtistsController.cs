@@ -20,9 +20,13 @@ namespace CodeFirstMusicSystem.Controllers
         }
 
         // GET: Artists
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-              return View(await _context.Artist.ToListAsync());
+            var artists = _context.Artist.Include(a => a.SongContributors)
+                                            .ThenInclude(sc => sc.Song)
+                                            .ThenInclude(s => s.Album)
+                                            .ToList();
+            return View(artists);
         }
 
         // GET: Artists/Details/5

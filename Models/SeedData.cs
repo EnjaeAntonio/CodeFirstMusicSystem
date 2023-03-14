@@ -8,7 +8,7 @@ namespace CodeFirstMusicSystem.Models
         public async static Task Initialize(IServiceProvider serviceProvider)
         {
             var context = new MusicSystemContext(serviceProvider.GetRequiredService<DbContextOptions<MusicSystemContext>>());
-               context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             context.Database.Migrate();
 

@@ -1,25 +1,34 @@
-﻿@model CodeFirstMusicSystem.Models.Playlist
+﻿@model CodeFirstMusicSystem.Models.Viewmodel.PlaylistDetailsViewModel
 
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<h1>@Model.Playlist.Name</h1>
+<p>Total runtime: @Model.TotalRuntime</p>
+<p>Number of songs: @Model.SongCount</p>
 
-<h1>Details</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Duration (seconds)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var song in Model.Songs)
+        {
+            <tr>
+                <td>@song.Title</td>
+                <td>@song.DurationSeconds</td>
+                <td>
+                    <form asp-controller="Playlist" asp-action="RemoveSong" method="post">
+                        <input type="hidden" name="playlistId" value="@Model.Playlist.Id" />
+                        <input type="hidden" name="songId" value="@song.Id" />
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<div>
-    <h4>Playlist</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<a href="@Url.Action("Index", "Songs")">All Songs</a>
+
