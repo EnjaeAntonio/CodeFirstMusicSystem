@@ -58,24 +58,6 @@ namespace CodeFirstMusicSystem.Controllers
 
 
         }
-
-        public IActionResult Albums(int id)
-        {
-            
-            Artist artist = _context.Artist
-                .Include(a => a.Albums)
-                .ThenInclude(a => a.Songs)
-                .FirstOrDefault(a => a.Id == id);
-
-            if (artist == null)
-            {
-                return NotFound();
-            }
-
-            return View(artist);
-        }
-
-
         // GET: Artists/Details/5
         public async Task<IActionResult> Details(int? id)
         {
