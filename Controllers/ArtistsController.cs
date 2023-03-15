@@ -48,7 +48,7 @@ namespace CodeFirstMusicSystem.Controllers
                 return NotFound();
             }
 
-            var viewModel = new AlbumArtistViewModel
+            AlbumArtistViewModel viewModel = new AlbumArtistViewModel
             {
                 Artists = new List<Artist> { artist },
                 AlbumsByArtist = albumsByArtist,
@@ -62,7 +62,7 @@ namespace CodeFirstMusicSystem.Controllers
         public IActionResult Albums(int id)
         {
             
-            var artist = _context.Artist
+            Artist artist = _context.Artist
                 .Include(a => a.Albums)
                 .ThenInclude(a => a.Songs)
                 .FirstOrDefault(a => a.Id == id);
