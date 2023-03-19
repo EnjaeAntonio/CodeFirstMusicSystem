@@ -61,8 +61,10 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             var song = await _context.Song
-                .Include(s => s.Album)
-                .FirstOrDefaultAsync(m => m.Id == id);
+               .Include(s => s.Album)
+               .Where(s => s.AlbumId == id)
+               .OrderBy(s => s.TrackNumber)
+               .ToListAsync();
             if (song == null)
             {
                 return NotFound();

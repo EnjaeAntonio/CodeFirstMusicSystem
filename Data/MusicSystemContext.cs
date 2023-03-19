@@ -27,5 +27,11 @@ namespace CodeFirstMusicSystem.Data
 
         public DbSet<CodeFirstMusicSystem.Models.SongContributor> SongContributor { get; set; }
 
+        public DbSet<CodeFirstMusicSystem.Models.Episode>? Episode { get; set; }
+
+        public DbSet<CodeFirstMusicSystem.Models.ListenerList>? ListenerList { get; set; }
+
+        public DbSet<CodeFirstMusicSystem.Models.Podcast>? Podcast { get; set; }
+
     }
 }

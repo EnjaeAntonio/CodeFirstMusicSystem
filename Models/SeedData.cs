@@ -53,32 +53,32 @@ namespace CodeFirstMusicSystem.Models
             }
 
             // NBA Youngboy songs
-            Song songOne = new Song("White Teeth", 165, albumOne.Id);
-            Song songTwo = new Song("Toxic Punk", 182, albumOne.Id);
-            Song songThree = new Song("Drug Addiction", 215, albumOne.Id);
-            Song songFour = new Song("I'm The One", 159, albumTwo.Id);
-            Song songFive = new Song("2 Seater", 175, albumTwo.Id);
-            Song songSix = new Song("Diamond Teeth Samurai", 187, albumTwo.Id);
-            Song songSeven = new Song("Genie", 177, albumTwo.Id);
+            Song songOne = new Song("White Teeth", 165, albumOne.Id, 1);
+            Song songTwo = new Song("Toxic Punk", 182, albumOne.Id, 2);
+            Song songThree = new Song("Drug Addiction", 215, albumOne.Id, 3);
+            Song songFour = new Song("I'm The One", 159, albumTwo.Id, 1);
+            Song songFive = new Song("2 Seater", 175, albumTwo.Id, 2);
+            Song songSix = new Song("Diamond Teeth Samurai", 187, albumTwo.Id, 3);
+            Song songSeven = new Song("Genie", 177, albumTwo.Id, 4);
             // Drake songs
 
 
-            Song songEight = new Song("Good Days", 260, albumThree.Id);
-            Song songNine = new Song("The Anonymous Ones", 231, albumThree.Id);
-            Song songTen = new Song("I Hate You", 211, albumThree.Id);
-            Song songEleven = new Song("God's Plan", 200, albumFour.Id);
-            Song songTwelve = new Song("Nonstop", 308, albumFour.Id);
-            Song songThirteen = new Song("In My Feelings", 217, albumFour.Id);
-            Song songFourteen = new Song("Nice For What", 210, albumFour.Id);
+            Song songEight = new Song("Good Days", 260, albumThree.Id, 1);
+            Song songNine = new Song("The Anonymous Ones", 231, albumThree.Id, 2);
+            Song songTen = new Song("I Hate You", 211, albumThree.Id, 3);
+            Song songEleven = new Song("God's Plan", 200, albumFour.Id, 1);
+            Song songTwelve = new Song("Nonstop", 308, albumFour.Id, 2);
+            Song songThirteen = new Song("In My Feelings", 217, albumFour.Id, 3);
+            Song songFourteen = new Song("Nice For What", 210, albumFour.Id, 4);
 
             // SZA Songs
 
-            Song songFifteen = new Song("Gone", 184, albumFive.Id);
-            Song songSixteen = new Song("I Hate You", 202, albumFive.Id);
-            Song songSeventeen = new Song("The Anonymous Ones", 207, albumFive.Id);
-            Song songEighteen = new Song("Supermodel", 219, albumSix.Id);
-            Song songNineteen = new Song("Drew Barrymore", 242, albumSix.Id);
-            Song songTwenty = new Song("The Weekend", 268, albumSix.Id);
+            Song songFifteen = new Song("Gone", 184, albumFive.Id, 1);
+            Song songSixteen = new Song("I Hate You", 202, albumFive.Id, 2);
+            Song songSeventeen = new Song("The Anonymous Ones", 207, albumFive.Id, 3);
+            Song songEighteen = new Song("Supermodel", 219, albumSix.Id, 4);
+            Song songNineteen = new Song("Drew Barrymore", 242, albumSix.Id, 5);
+            Song songTwenty = new Song("The Weekend", 268, albumSix.Id, 6);
 
             if (!context.Song.Any())
             {
