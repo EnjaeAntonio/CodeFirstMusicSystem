@@ -15,6 +15,7 @@ namespace CodeFirstMusicSystem.Data
         {
         }
 
+
         public DbSet<CodeFirstMusicSystem.Models.Album> Album { get; set; } = default!;
 
         public DbSet<CodeFirstMusicSystem.Models.Artist> Artist { get; set; }
@@ -32,6 +33,21 @@ namespace CodeFirstMusicSystem.Data
         public DbSet<CodeFirstMusicSystem.Models.ListenerList>? ListenerList { get; set; }
 
         public DbSet<CodeFirstMusicSystem.Models.Podcast>? Podcast { get; set; }
+        
+
+        public void ModelCreation(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Song>()
+                .HasDiscriminator<string>("Type")
+                .HasValue<Song>("Song")
+                .HasValue<Episode>("Episode");
+
+            modelBuilder.Entity<Episode>()
+                .HasBaseType<Song>()
+                .HasDiscriminator<string>("Type")
+                .HasValue("Episode");
+
+        }
 
     }
 }

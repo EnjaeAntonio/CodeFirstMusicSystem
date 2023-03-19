@@ -34,7 +34,7 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             var album = await _context.Album
-                .Include(a => a.Songs)
+                .Include(a => a.Songs.OrderBy(s => s.TrackNumber))
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (album == null)
             {
