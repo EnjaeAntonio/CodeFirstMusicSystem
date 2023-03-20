@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using CodeFirstMusicSystem.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<CodeFirstMusicSystemContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CodeFirstMusicSystemContext") ?? throw new InvalidOperationException("Connection string 'CodeFirstMusicSystemContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
