@@ -23,7 +23,10 @@ namespace CodeFirstMusicSystem.Controllers
         // GET: Songs
         public async Task<IActionResult> Index()
         {
-            var musicSystemContext = _context.Song.Include(s => s.Album);
+            var musicSystemContext = _context.Song
+                .Include(s => s.Album)
+                .Include(s => s.SongContributors)
+                .ThenInclude(sc => sc.Artist);
             return View(await musicSystemContext.ToListAsync());
         }
 

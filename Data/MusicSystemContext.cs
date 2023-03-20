@@ -27,5 +27,23 @@ namespace CodeFirstMusicSystem.Data
 
         public DbSet<CodeFirstMusicSystem.Models.SongContributor> SongContributor { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SongContributor>()
+                .HasKey(sc => new { sc.ArtistId, sc.SongId });
+
+            modelBuilder.Entity<SongContributor>()
+                .HasOne(sc => sc.Artist)
+                .WithMany(a => a.SongContributors)
+                .HasForeignKey(sc => sc.ArtistId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SongContributor>()
+                .HasOne(sc => sc.Song)
+                .WithMany(s => s.SongContributors)
+                .HasForeignKey(sc => sc.SongId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
     }
 }
