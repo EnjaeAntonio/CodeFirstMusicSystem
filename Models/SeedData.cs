@@ -148,8 +148,8 @@ namespace CodeFirstMusicSystem.Models
                 context.SongContributor.Add(artistSongEighteen);
                 context.SongContributor.Add(artistSongNineteen);
                 context.SongContributor.Add(artistSongTwenty);
-            }
             await context.SaveChangesAsync();
+            }
         }
     }
 }
