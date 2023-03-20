@@ -4,8 +4,11 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
         public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; } = new HashSet<PlaylistSong>();
 
+        public Playlist(string name)
+        {
+            Name = name;
+        }
     }
 }

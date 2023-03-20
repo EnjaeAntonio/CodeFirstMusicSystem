@@ -30,19 +30,16 @@ namespace CodeFirstMusicSystem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SongContributor>()
-                .HasKey(sc => new { sc.ArtistId, sc.SongId });
-
-            modelBuilder.Entity<SongContributor>()
                 .HasOne(sc => sc.Artist)
                 .WithMany(a => a.SongContributors)
                 .HasForeignKey(sc => sc.ArtistId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SongContributor>()
                 .HasOne(sc => sc.Song)
                 .WithMany(s => s.SongContributors)
                 .HasForeignKey(sc => sc.SongId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

@@ -148,7 +148,26 @@ namespace CodeFirstMusicSystem.Models
                 context.SongContributor.Add(artistSongEighteen);
                 context.SongContributor.Add(artistSongNineteen);
                 context.SongContributor.Add(artistSongTwenty);
-            await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
+            }
+
+            Playlist playlistOne = new Playlist("Enjae's Playlist");
+            Playlist playlistTwo = new Playlist("Gym Playlist");
+            Playlist playlistThree = new Playlist("Cruising Playlist");
+
+            if (!context.Playlist.Any())
+            {
+                context.Playlist.Add(playlistOne);
+                context.Playlist.Add(playlistTwo);
+                context.Playlist.Add(playlistThree);
+                await context.SaveChangesAsync();
+            }
+
+            PlaylistSong playlistSongOne = new PlaylistSong(playlistOne.Id, songOne.Id);    
+
+            if(!context.PlaylistSong.Any())
+            {
+                context.PlaylistSong.Add(playlistSongOne); 
             }
         }
     }
