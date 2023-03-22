@@ -8,7 +8,8 @@
         public virtual Song Song { get; set; }
         public int SongId { get; set; }
 
-        public PlaylistSong(int playlistId, int songId)
+        public PlaylistSong() { }
+        public PlaylistSong(int songId, int playlistId)
         {
             PlaylistId = playlistId;
             SongId = songId;

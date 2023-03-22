@@ -37,9 +37,8 @@ namespace CodeFirstMusicSystem.Models
         public int Id { get; set; }
 
         public ICollection<Episode> Episodes { get; set; }
-        public virtual ICollection<PodcastCastArtist> PodcastCastArtists { get; set; }
-
-        public virtual ICollection<PodcastListenerList> PodcastListenerLists { get; set; }
+        public ICollection<PodcastCastArtist> PodcastCastArtists { get; set; } = new HashSet<PodcastCastArtist>();
+        public ICollection<ListenerList> ListenerLists { get; set; } = new HashSet<ListenerList>();
         public Podcast(string title, DateTime releaseDate)
         {
             Title = title;

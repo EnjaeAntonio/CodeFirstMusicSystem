@@ -22,7 +22,7 @@
 
     public class GuestArtist : BaseArtist
     {
-        public ICollection<EpisodeGuestArtist> EpisodeGuestArtists { get; set; }
+        public ICollection<Episode> Episodes { get; set; }
 
         public GuestArtist(string name)
         {

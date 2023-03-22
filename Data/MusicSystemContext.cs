@@ -40,7 +40,22 @@ namespace CodeFirstMusicSystem.Data
                 .WithMany(s => s.SongContributors)
                 .HasForeignKey(sc => sc.SongId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PodcastCastArtist>()
+                .HasKey(pap => new { pap.PodcastArtistId, pap.PodcastId });
+
+            modelBuilder.Entity<GuestArtistEpisode>()
+                .HasKey(gae => new { gae.GuestArtistId, gae.EpisodeId });
+
+            modelBuilder.Entity<PodcastListenerList>()
+                .HasKey(llp => new { llp.ListenerListId, llp.PodcastId });
         }
+
+        public DbSet<CodeFirstMusicSystem.Models.Podcast>? Podcast { get; set; }
+
+        public DbSet<CodeFirstMusicSystem.Models.Episode>? Episode { get; set; }
+
+        public DbSet<CodeFirstMusicSystem.Models.ListenerList>? ListenerList { get; set; }
 
     }
 }
