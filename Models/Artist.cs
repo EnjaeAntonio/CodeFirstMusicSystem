@@ -22,8 +22,9 @@
 
     public class GuestArtist : BaseArtist
     {
-        public ICollection<Episode> Episodes { get; set; }
+        public ICollection<Episode> Episodes { get; set; } = new HashSet<Episode>();
 
+        public GuestArtist() { }
         public GuestArtist(string name)
         {
             Name = name;
@@ -34,6 +35,8 @@
     {
         public ICollection<PodcastCastArtist> PodcastCastArtists { get; set; }
 
+
+        public PodcastArtist() { }
         public PodcastArtist(string name)
         {
             Name = name;

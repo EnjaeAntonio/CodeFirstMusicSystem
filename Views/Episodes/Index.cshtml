@@ -17,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.AirDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Podcast)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
@@ -30,6 +33,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.AirDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Podcast.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)

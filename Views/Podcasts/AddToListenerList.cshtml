@@ -1,0 +1,30 @@
+﻿@model CodeFirstMusicSystem.Models.Viewmodel.AddListenerListViewModel
+
+@{
+    ViewData["Title"] = "AddToListenerList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add Podcast to Listener List</h1>
+
+<form asp-action="AddToListenerList" method="post">
+    <div class="form-group">
+        <label asp-for="PodcastId">Select Podcast:</label>
+        <select asp-for="PodcastId" asp-items="@(new SelectList(Model.Podcasts, "Id", "Title"))" class="form-control">
+            <option value="">-- Choose a podcast --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ListenerListId">Select Listener List:</label>
+        <select asp-for="ListenerListId" asp-items="@(new SelectList(Model.ListenerLists, "Id", "Name"))" class="form-control">
+            <option value="">-- Choose a listener list --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to Podcasts</a>
+</div>

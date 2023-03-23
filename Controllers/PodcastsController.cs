@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CodeFirstMusicSystem.Data;
 using CodeFirstMusicSystem.Models;
+using CodeFirstMusicSystem.Models.Viewmodel;
 
 namespace CodeFirstMusicSystem.Controllers
 {
@@ -36,14 +37,73 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             var podcast = await _context.Podcast
+                .Include(p => p.Episodes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (podcast == null)
             {
                 return NotFound();
             }
 
+            podcast.Episodes = podcast.Episodes.OrderByDescending(e => e.AirDate).ToList();
+
             return View(podcast);
         }
+
+
+        public IActionResult AddToListenerList(int podcastId)
+        {
+            // Get the podcast by its Id
+            var podcast = _context.Podcast.FirstOrDefault(p => p.Id == podcastId);
+
+            if (podcast == null)
+            {
+                return NotFound();
+            }
+
+            // Get all listener lists
+            var allListenerLists = _context.ListenerList.ToList();
+
+            var existingListenerLists = _context.PodcastListenerLists
+                .Where(pll => pll.PodcastId == podcastId)
+                .Select(pll => pll.ListenerListId)
+                .ToList();
+
+            var availableListenerLists = allListenerLists.Where(ll => !existingListenerLists.Contains(ll.Id)).ToList();
+
+            AddListenerListViewModel viewModel = new AddListenerListViewModel
+            {
+                PodcastId = podcastId,
+                Podcasts = new List<Podcast> { podcast },
+                ListenerLists = availableListenerLists
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddToListenerList(AddListenerListViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Podcasts = _context.Podcast.ToList();
+                viewModel.ListenerLists = _context.ListenerList.ToList();
+                return View(viewModel);
+            }
+
+            PodcastListenerList podcastListenerList = new PodcastListenerList
+            {
+                PodcastId = viewModel.PodcastId,
+                ListenerListId = viewModel.ListenerListId,
+            };
+
+            _context.PodcastListenerLists.Add(podcastListenerList);
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", "Podcasts", new { id = viewModel.PodcastId });
+        }
+
+
 
         // GET: Podcasts/Create
         public IActionResult Create()

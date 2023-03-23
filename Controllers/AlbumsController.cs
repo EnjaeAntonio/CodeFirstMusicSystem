@@ -40,6 +40,7 @@ namespace CodeFirstMusicSystem.Controllers
             {
                 return NotFound();
             }
+            album.Songs = album.Songs.OrderBy(e => e.TrackSong).ToList();
 
             return View(album);
         }

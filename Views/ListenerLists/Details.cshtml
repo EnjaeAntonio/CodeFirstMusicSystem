@@ -23,3 +23,14 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<div>
+    <h4>Podcasts in this Listener List</h4>
+    <hr />
+    @foreach (var listenerListPodcast in Model.ListenerListPodcasts)
+    {
+        <ul>
+            <li><a href="@Url.Action("Details", "Podcasts", new { id = listenerListPodcast.Podcast.Id })">@listenerListPodcast.Podcast.Title</a></li>
+        </ul>
+    }
+</div>

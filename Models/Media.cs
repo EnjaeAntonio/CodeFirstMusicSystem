@@ -12,10 +12,7 @@ namespace CodeFirstMusicSystem.Models
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Duration is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Duration must be a positive value.")]
-        [Display(Name = "Duration Seconds")]
-        public int DurationSeconds { get; set; }
+  
     }
 
     public class Song : Media
@@ -28,18 +25,24 @@ namespace CodeFirstMusicSystem.Models
         [Required(ErrorMessage = "Album ID is required.")]
         public int AlbumId { get; set; }
 
+        public int TrackSong { get; set; }
         public virtual ICollection<SongContributor> SongContributors { get; set; } = new HashSet<SongContributor>();
         public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; } = new HashSet<PlaylistSong>();
 
         // podcasts artists M to M
         // podcast to L.L M to M
+        [Required(ErrorMessage = "Duration is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Duration must be a positive value.")]
+        [Display(Name = "Duration Seconds")]
+        public int DurationSeconds { get; set; }
 
         public Song()
         {
         }
 
-        public Song(string title, int durationSeconds, int albumId)
+        public Song(int trackSong, string title, int durationSeconds, int albumId)
         {
+            TrackSong = trackSong;
             Title = title;
             DurationSeconds = durationSeconds;
             AlbumId = albumId;
@@ -48,17 +51,23 @@ namespace CodeFirstMusicSystem.Models
     public class Episode : Media
     {
         public int Id { get; set; }
-        public DateTime AirDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+
+        [Display(Name = "Date Aired")]
+        public DateTime AirDate { get; set; }
+        
+        public virtual Podcast Podcast { get; set; }
+        public int PodcastId { get; set; }
         public ICollection<GuestArtistEpisode> GuestArtistEpisodes { get; set; } = new HashSet<GuestArtistEpisode>();
         public Episode()
         {
         }
 
-        public Episode(string title, int durationSeconds, DateTime airDate, int podcastId, int guestArtistId)
+        public Episode(string title, DateTime airDate)
         {
             Title = title;
-            DurationSeconds = durationSeconds;
             AirDate = airDate;
         }
     }

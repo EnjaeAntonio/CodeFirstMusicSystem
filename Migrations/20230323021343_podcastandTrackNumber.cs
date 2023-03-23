@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace CodeFirstMusicSystem.Migrations
 {
-    public partial class podcastss : Migration
+    public partial class podcastandTrackNumber : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,6 +18,13 @@ namespace CodeFirstMusicSystem.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
+            migrationBuilder.AddColumn<int>(
+                name: "TrackSong",
+                table: "Song",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
                 table: "Album",
@@ -27,7 +35,21 @@ namespace CodeFirstMusicSystem.Migrations
                 oldType: "nvarchar(max)");
 
             migrationBuilder.CreateTable(
-                name: "GuestArtist",
+                name: "AddListenerListViewModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PodcastId = table.Column<int>(type: "int", nullable: false),
+                    ListenerListId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddListenerListViewModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuestArtists",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -36,7 +58,20 @@ namespace CodeFirstMusicSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GuestArtist", x => x.Id);
+                    table.PrimaryKey("PK_GuestArtists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PodcastArtists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PodcastArtists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,25 +80,18 @@ namespace CodeFirstMusicSystem.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AddListenerListViewModelId = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Podcast", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PodcastArtist",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PodcastArtist", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Podcast_AddListenerListViewModel_AddListenerListViewModelId",
+                        column: x => x.AddListenerListViewModelId,
+                        principalTable: "AddListenerListViewModel",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -73,8 +101,8 @@ namespace CodeFirstMusicSystem.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AirDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PodcastId = table.Column<int>(type: "int", nullable: false),
                     GuestArtistId = table.Column<int>(type: "int", nullable: true),
-                    PodcastId = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DurationSeconds = table.Column<int>(type: "int", nullable: false)
                 },
@@ -82,15 +110,16 @@ namespace CodeFirstMusicSystem.Migrations
                 {
                     table.PrimaryKey("PK_Episode", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Episode_GuestArtist_GuestArtistId",
+                        name: "FK_Episode_GuestArtists_GuestArtistId",
                         column: x => x.GuestArtistId,
-                        principalTable: "GuestArtist",
+                        principalTable: "GuestArtists",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Episode_Podcast_PodcastId",
                         column: x => x.PodcastId,
                         principalTable: "Podcast",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,11 +129,17 @@ namespace CodeFirstMusicSystem.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddListenerListViewModelId = table.Column<int>(type: "int", nullable: true),
                     PodcastId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ListenerList", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ListenerList_AddListenerListViewModel_AddListenerListViewModelId",
+                        column: x => x.AddListenerListViewModelId,
+                        principalTable: "AddListenerListViewModel",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ListenerList_Podcast_PodcastId",
                         column: x => x.PodcastId,
@@ -113,7 +148,7 @@ namespace CodeFirstMusicSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PodcastCastArtist",
+                name: "PodcastCastArtists",
                 columns: table => new
                 {
                     PodcastArtistId = table.Column<int>(type: "int", nullable: false),
@@ -122,23 +157,23 @@ namespace CodeFirstMusicSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PodcastCastArtist", x => new { x.PodcastArtistId, x.PodcastId });
+                    table.PrimaryKey("PK_PodcastCastArtists", x => new { x.PodcastArtistId, x.PodcastId });
                     table.ForeignKey(
-                        name: "FK_PodcastCastArtist_Podcast_PodcastId",
+                        name: "FK_PodcastCastArtists_Podcast_PodcastId",
                         column: x => x.PodcastId,
                         principalTable: "Podcast",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PodcastCastArtist_PodcastArtist_PodcastArtistId",
+                        name: "FK_PodcastCastArtists_PodcastArtists_PodcastArtistId",
                         column: x => x.PodcastArtistId,
-                        principalTable: "PodcastArtist",
+                        principalTable: "PodcastArtists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GuestArtistEpisode",
+                name: "GuestArtistEpisodes",
                 columns: table => new
                 {
                     GuestArtistId = table.Column<int>(type: "int", nullable: false),
@@ -147,23 +182,23 @@ namespace CodeFirstMusicSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GuestArtistEpisode", x => new { x.GuestArtistId, x.EpisodeId });
+                    table.PrimaryKey("PK_GuestArtistEpisodes", x => new { x.GuestArtistId, x.EpisodeId });
                     table.ForeignKey(
-                        name: "FK_GuestArtistEpisode_Episode_EpisodeId",
+                        name: "FK_GuestArtistEpisodes_Episode_EpisodeId",
                         column: x => x.EpisodeId,
                         principalTable: "Episode",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GuestArtistEpisode_GuestArtist_GuestArtistId",
+                        name: "FK_GuestArtistEpisodes_GuestArtists_GuestArtistId",
                         column: x => x.GuestArtistId,
-                        principalTable: "GuestArtist",
+                        principalTable: "GuestArtists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PodcastListenerList",
+                name: "PodcastListenerLists",
                 columns: table => new
                 {
                     ListenerListId = table.Column<int>(type: "int", nullable: false),
@@ -172,15 +207,15 @@ namespace CodeFirstMusicSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PodcastListenerList", x => new { x.ListenerListId, x.PodcastId });
+                    table.PrimaryKey("PK_PodcastListenerLists", x => new { x.ListenerListId, x.PodcastId });
                     table.ForeignKey(
-                        name: "FK_PodcastListenerList_ListenerList_ListenerListId",
+                        name: "FK_PodcastListenerLists_ListenerList_ListenerListId",
                         column: x => x.ListenerListId,
                         principalTable: "ListenerList",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PodcastListenerList_Podcast_PodcastId",
+                        name: "FK_PodcastListenerLists_Podcast_PodcastId",
                         column: x => x.PodcastId,
                         principalTable: "Podcast",
                         principalColumn: "Id",
@@ -198,9 +233,14 @@ namespace CodeFirstMusicSystem.Migrations
                 column: "PodcastId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GuestArtistEpisode_EpisodeId",
-                table: "GuestArtistEpisode",
+                name: "IX_GuestArtistEpisodes_EpisodeId",
+                table: "GuestArtistEpisodes",
                 column: "EpisodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ListenerList_AddListenerListViewModelId",
+                table: "ListenerList",
+                column: "AddListenerListViewModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListenerList_PodcastId",
@@ -208,41 +248,53 @@ namespace CodeFirstMusicSystem.Migrations
                 column: "PodcastId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PodcastCastArtist_PodcastId",
-                table: "PodcastCastArtist",
+                name: "IX_Podcast_AddListenerListViewModelId",
+                table: "Podcast",
+                column: "AddListenerListViewModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PodcastCastArtists_PodcastId",
+                table: "PodcastCastArtists",
                 column: "PodcastId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PodcastListenerList_PodcastId",
-                table: "PodcastListenerList",
+                name: "IX_PodcastListenerLists_PodcastId",
+                table: "PodcastListenerLists",
                 column: "PodcastId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GuestArtistEpisode");
+                name: "GuestArtistEpisodes");
 
             migrationBuilder.DropTable(
-                name: "PodcastCastArtist");
+                name: "PodcastCastArtists");
 
             migrationBuilder.DropTable(
-                name: "PodcastListenerList");
+                name: "PodcastListenerLists");
 
             migrationBuilder.DropTable(
                 name: "Episode");
 
             migrationBuilder.DropTable(
-                name: "PodcastArtist");
+                name: "PodcastArtists");
 
             migrationBuilder.DropTable(
                 name: "ListenerList");
 
             migrationBuilder.DropTable(
-                name: "GuestArtist");
+                name: "GuestArtists");
 
             migrationBuilder.DropTable(
                 name: "Podcast");
+
+            migrationBuilder.DropTable(
+                name: "AddListenerListViewModel");
+
+            migrationBuilder.DropColumn(
+                name: "TrackSong",
+                table: "Song");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",

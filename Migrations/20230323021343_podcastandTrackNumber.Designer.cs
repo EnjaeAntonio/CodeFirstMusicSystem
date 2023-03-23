@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeFirstMusicSystem.Migrations
 {
     [DbContext(typeof(MusicSystemContext))]
-    [Migration("20230321181757_podcastss")]
-    partial class podcastss
+    [Migration("20230323021343_podcastandTrackNumber")]
+    partial class podcastandTrackNumber
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,7 +84,7 @@ namespace CodeFirstMusicSystem.Migrations
                     b.Property<int?>("GuestArtistId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PodcastId")
+                    b.Property<int>("PodcastId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -115,7 +115,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GuestArtist");
+                    b.ToTable("GuestArtists");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.GuestArtistEpisode", b =>
@@ -133,7 +133,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("EpisodeId");
 
-                    b.ToTable("GuestArtistEpisode");
+                    b.ToTable("GuestArtistEpisodes");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.ListenerList", b =>
@@ -144,6 +144,9 @@ namespace CodeFirstMusicSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AddListenerListViewModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -152,6 +155,8 @@ namespace CodeFirstMusicSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddListenerListViewModelId");
 
                     b.HasIndex("PodcastId");
 
@@ -206,6 +211,9 @@ namespace CodeFirstMusicSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AddListenerListViewModelId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
@@ -215,6 +223,8 @@ namespace CodeFirstMusicSystem.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddListenerListViewModelId");
 
                     b.ToTable("Podcast");
                 });
@@ -233,7 +243,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PodcastArtist");
+                    b.ToTable("PodcastArtists");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.PodcastCastArtist", b =>
@@ -251,7 +261,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("PodcastId");
 
-                    b.ToTable("PodcastCastArtist");
+                    b.ToTable("PodcastCastArtists");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.PodcastListenerList", b =>
@@ -269,7 +279,7 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.HasIndex("PodcastId");
 
-                    b.ToTable("PodcastListenerList");
+                    b.ToTable("PodcastListenerLists");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.Song", b =>
@@ -290,6 +300,9 @@ namespace CodeFirstMusicSystem.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("TrackSong")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -321,6 +334,25 @@ namespace CodeFirstMusicSystem.Migrations
                     b.ToTable("SongContributor");
                 });
 
+            modelBuilder.Entity("CodeFirstMusicSystem.Models.Viewmodel.AddListenerListViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ListenerListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PodcastId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AddListenerListViewModel");
+                });
+
             modelBuilder.Entity("CodeFirstMusicSystem.Models.Album", b =>
                 {
                     b.HasOne("CodeFirstMusicSystem.Models.Artist", null)
@@ -334,9 +366,13 @@ namespace CodeFirstMusicSystem.Migrations
                         .WithMany("Episodes")
                         .HasForeignKey("GuestArtistId");
 
-                    b.HasOne("CodeFirstMusicSystem.Models.Podcast", null)
+                    b.HasOne("CodeFirstMusicSystem.Models.Podcast", "Podcast")
                         .WithMany("Episodes")
-                        .HasForeignKey("PodcastId");
+                        .HasForeignKey("PodcastId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Podcast");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.GuestArtistEpisode", b =>
@@ -360,6 +396,10 @@ namespace CodeFirstMusicSystem.Migrations
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.ListenerList", b =>
                 {
+                    b.HasOne("CodeFirstMusicSystem.Models.Viewmodel.AddListenerListViewModel", null)
+                        .WithMany("ListenerLists")
+                        .HasForeignKey("AddListenerListViewModelId");
+
                     b.HasOne("CodeFirstMusicSystem.Models.Podcast", null)
                         .WithMany("ListenerLists")
                         .HasForeignKey("PodcastId");
@@ -382,6 +422,13 @@ namespace CodeFirstMusicSystem.Migrations
                     b.Navigation("Playlist");
 
                     b.Navigation("Song");
+                });
+
+            modelBuilder.Entity("CodeFirstMusicSystem.Models.Podcast", b =>
+                {
+                    b.HasOne("CodeFirstMusicSystem.Models.Viewmodel.AddListenerListViewModel", null)
+                        .WithMany("Podcasts")
+                        .HasForeignKey("AddListenerListViewModelId");
                 });
 
             modelBuilder.Entity("CodeFirstMusicSystem.Models.PodcastCastArtist", b =>
@@ -503,6 +550,13 @@ namespace CodeFirstMusicSystem.Migrations
                     b.Navigation("PlaylistSongs");
 
                     b.Navigation("SongContributors");
+                });
+
+            modelBuilder.Entity("CodeFirstMusicSystem.Models.Viewmodel.AddListenerListViewModel", b =>
+                {
+                    b.Navigation("ListenerLists");
+
+                    b.Navigation("Podcasts");
                 });
 #pragma warning restore 612, 618
         }

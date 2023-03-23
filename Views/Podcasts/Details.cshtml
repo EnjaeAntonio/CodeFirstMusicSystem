@@ -29,3 +29,25 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<div>
+    <h4>Episodes</h4>
+    <hr />
+    @foreach (Episode episode in Model.Episodes)
+    {
+            <dl class="row">
+                <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => episode.Title)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => episode.Title)
+                </dd>
+                <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => episode.AirDate)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => episode.AirDate)
+                </dd>
+            </dl>
+    }
+</div>

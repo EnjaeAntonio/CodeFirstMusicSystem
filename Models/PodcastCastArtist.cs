@@ -8,5 +8,10 @@
 
         public int PodcastId { get; set; }
         public Podcast Podcast { get; set; }
+        public PodcastCastArtist(int podcastId, int podcastArtistId)
+        {
+            PodcastId = podcastId;
+            PodcastArtistId = podcastArtistId;
+        }
     }
 }

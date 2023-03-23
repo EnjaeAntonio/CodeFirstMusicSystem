@@ -22,9 +22,8 @@ namespace CodeFirstMusicSystem.Controllers
         // GET: Episodes
         public async Task<IActionResult> Index()
         {
-              return _context.Episode != null ? 
-                          View(await _context.Episode.ToListAsync()) :
-                          Problem("Entity set 'MusicSystemContext.Episode'  is null.");
+            var musicSystemContext = _context.Episode.Include(e => e.Podcast);
+            return View(await musicSystemContext.ToListAsync());
         }
 
         // GET: Episodes/Details/5
@@ -36,6 +35,7 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             var episode = await _context.Episode
+                .Include(e => e.Podcast)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (episode == null)
             {
@@ -48,6 +48,7 @@ namespace CodeFirstMusicSystem.Controllers
         // GET: Episodes/Create
         public IActionResult Create()
         {
+            ViewData["PodcastId"] = new SelectList(_context.Podcast, "Id", "Title");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace CodeFirstMusicSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AirDate,Title,DurationSeconds")] Episode episode)
+        public async Task<IActionResult> Create([Bind("Id,AirDate,PodcastId,Title,DurationSeconds")] Episode episode)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,7 @@ namespace CodeFirstMusicSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PodcastId"] = new SelectList(_context.Podcast, "Id", "Title", episode.PodcastId);
             return View(episode);
         }
 
@@ -80,6 +82,7 @@ namespace CodeFirstMusicSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["PodcastId"] = new SelectList(_context.Podcast, "Id", "Title", episode.PodcastId);
             return View(episode);
         }
 
@@ -88,7 +91,7 @@ namespace CodeFirstMusicSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AirDate,Title,DurationSeconds")] Episode episode)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AirDate,PodcastId,Title,DurationSeconds")] Episode episode)
         {
             if (id != episode.Id)
             {
@@ -115,6 +118,7 @@ namespace CodeFirstMusicSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PodcastId"] = new SelectList(_context.Podcast, "Id", "Title", episode.PodcastId);
             return View(episode);
         }
 
@@ -127,6 +131,7 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             var episode = await _context.Episode
+                .Include(e => e.Podcast)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (episode == null)
             {

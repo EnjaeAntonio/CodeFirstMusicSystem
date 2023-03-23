@@ -12,8 +12,9 @@ namespace CodeFirstMusicSystem.Models
         [Display(Name = "Title")]
         public string Title { get; set; }
         [DataType(DataType.Date)]
-
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Release Date")]
+
         public DateTime ReleaseDate { get; set; }
     }
 
@@ -36,7 +37,7 @@ namespace CodeFirstMusicSystem.Models
     {
         public int Id { get; set; }
 
-        public ICollection<Episode> Episodes { get; set; }
+        public ICollection<Episode> Episodes { get; set; } = new HashSet<Episode>();
         public ICollection<PodcastCastArtist> PodcastCastArtists { get; set; } = new HashSet<PodcastCastArtist>();
         public ICollection<ListenerList> ListenerLists { get; set; } = new HashSet<ListenerList>();
         public Podcast(string title, DateTime releaseDate)

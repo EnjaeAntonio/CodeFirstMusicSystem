@@ -36,6 +36,8 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             var listenerList = await _context.ListenerList
+                .Include(ll => ll.ListenerListPodcasts)
+                .ThenInclude(llp => llp.Podcast)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (listenerList == null)
             {

@@ -8,5 +8,11 @@
 
         public int EpisodeId { get; set; }
         public Episode Episode { get; set; }
+
+        public GuestArtistEpisode(int episodeId, int guestArtistId) 
+        {
+            EpisodeId = episodeId;
+            GuestArtistId = guestArtistId;
+        }
     }
 }

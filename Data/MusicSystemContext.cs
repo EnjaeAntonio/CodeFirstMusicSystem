@@ -57,5 +57,14 @@ namespace CodeFirstMusicSystem.Data
 
         public DbSet<CodeFirstMusicSystem.Models.ListenerList>? ListenerList { get; set; }
 
+        public DbSet<PodcastListenerList> PodcastListenerLists { get; set; }
+
+        public DbSet<CodeFirstMusicSystem.Models.Viewmodel.AddListenerListViewModel>? AddListenerListViewModel { get; set; }
+
+        public DbSet<PodcastArtist> PodcastArtists { get; set; }
+        public DbSet<PodcastCastArtist> PodcastCastArtists { get; set; }
+        public DbSet<GuestArtist> GuestArtists { get; set; }
+
+        public DbSet<GuestArtistEpisode> GuestArtistEpisodes { get; set; }
     }
 }
