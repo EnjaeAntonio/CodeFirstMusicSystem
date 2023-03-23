@@ -1,0 +1,13 @@
+﻿@model CodeFirstMusicSystem.Models.Artist
+
+@{
+    ViewData["Title"] = "Albums";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+
+@foreach (var album in Model.Albums)
+{
+    <p>@album.Title</p>
+}

@@ -1,0 +1,33 @@
+﻿@model CodeFirstMusicSystem.Models.Viewmodel.AddSongViewModel
+
+@{
+    ViewBag.Title = "Add Song to Playlist";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.PlaylistId, "Playlist", htmlAttributes: new { @class = "control-label" })
+        <div>
+@Html.DropDownListFor(model => model.PlaylistId, Model.Playlists.Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }), "-- Select Playlist --", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SongId, "Song", htmlAttributes: new { @class = "control-label" })
+        <div>
+@Html.DropDownListFor(model => model.SongId, Model.Songs.Select(s => new SelectListItem { Text = s.Title, Value = s.Id.ToString() }), "-- Select Song --", new { @class = "form-control" })
+        </div>
+    </div>
+    /*
+    Finally figured out how to get the dropdown using this
+    https://learn.microsoft.com/en-us/dotnet/api/system.web.mvc.html.selectextensions.dropdownlistfor?view=aspnet-mvc-5.2
+    */
+    <div class="form-group">
+        <div>
+            <button type="submit" class="btn btn-default">Add to Playlist</button>
+        </div>
+    </div>
+}
