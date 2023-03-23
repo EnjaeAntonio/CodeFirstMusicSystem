@@ -39,7 +39,7 @@ namespace CodeFirstMusicSystem.Models
 
         public ICollection<Episode> Episodes { get; set; } = new HashSet<Episode>();
         public ICollection<PodcastCastArtist> PodcastCastArtists { get; set; } = new HashSet<PodcastCastArtist>();
-        public ICollection<ListenerList> ListenerLists { get; set; } = new HashSet<ListenerList>();
+        public ICollection<PodcastListenerList> PodcastListenerLists { get; set; } = new HashSet<PodcastListenerList>();
         public Podcast(string title, DateTime releaseDate)
         {
             Title = title;

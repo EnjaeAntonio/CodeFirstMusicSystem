@@ -1,4 +1,5 @@
 ﻿using CodeFirstMusicSystem.Data;
+using CodeFirstMusicSystem.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeFirstMusicSystem.Models
@@ -8,7 +9,7 @@ namespace CodeFirstMusicSystem.Models
         public async static Task Initialize(IServiceProvider serviceProvider)
         {
             var context = new MusicSystemContext(serviceProvider.GetRequiredService<DbContextOptions<MusicSystemContext>>());
-            context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
 
             context.Database.Migrate();
 
@@ -173,58 +174,155 @@ namespace CodeFirstMusicSystem.Models
             }
 
             Podcast podcastOne = new Podcast("The Rogan Experience", new DateTime(2009, 12, 24));
+            Podcast podcastTwo = new Podcast("StartUp Podcast", new DateTime(2014, 10, 16));
+            Podcast podcastThree = new Podcast("The Health Code", new DateTime(2018, 4, 2));
+            Podcast podcastFour = new Podcast("Impaulsive", new DateTime(2018, 11, 19));
             if (!context.Podcast.Any())
             {
+
                 context.Podcast.Add(podcastOne);
+                context.Podcast.Add(podcastTwo);
+                context.Podcast.Add(podcastThree);
+                context.Podcast.Add(podcastFour);
+
                 await context.SaveChangesAsync();
             }
 
             PodcastArtist podcastArtistJoeRogan = new PodcastArtist("Joe Rogan");
 
-            // Save the PodcastArtist to the database
+            PodcastArtist podcastArtistAlexBlumberg = new PodcastArtist("Alex Blumberg");
+
+            PodcastArtist podcastArtistSarahDay = new PodcastArtist("Sarah Day");
+
+            PodcastArtist podcastArtistLoganPaul = new PodcastArtist("Logan Paul");
+
             if (!context.PodcastArtists.Any())
             {
                 context.PodcastArtists.Add(podcastArtistJoeRogan);
+                context.PodcastArtists.Add(podcastArtistAlexBlumberg);
+                context.PodcastArtists.Add(podcastArtistSarahDay);
+                context.PodcastArtists.Add(podcastArtistLoganPaul);
+
                 await context.SaveChangesAsync();
             }
 
-            // Now create the PodcastCastArtist with the appropriate IDs
-            PodcastCastArtist podcastCastArtist = new PodcastCastArtist(podcastOne.Id, podcastArtistJoeRogan.Id);
+            // PodcastCastArtist 1
+            PodcastCastArtist podcastCastArtistOne = new PodcastCastArtist(podcastOne.Id, podcastArtistJoeRogan.Id);
+
+            // PodcastCastArtist 2
+            PodcastCastArtist podcastCastArtistTwo = new PodcastCastArtist(podcastTwo.Id, podcastArtistAlexBlumberg.Id);
+
+            // PodcastCastArtist 3
+            PodcastCastArtist podcastCastArtistThree = new PodcastCastArtist(podcastThree.Id, podcastArtistSarahDay.Id);
+
+            // PodcastCastArtist 4
+            PodcastCastArtist podcastCastArtistFour = new PodcastCastArtist(podcastFour.Id, podcastArtistLoganPaul.Id);
+
             if (!context.PodcastCastArtists.Any())
             {
-                podcastOne.PodcastCastArtists.Add(podcastCastArtist);
+                context.PodcastCastArtists.Add(podcastCastArtistOne);
+                context.PodcastCastArtists.Add(podcastCastArtistTwo);
+                context.PodcastCastArtists.Add(podcastCastArtistThree);
+                context.PodcastCastArtists.Add(podcastCastArtistFour);
+
                 await context.SaveChangesAsync();
             }
 
-            Episode episodeOne = new Episode("#1609 - Elon Musk", new DateTime(2021, 02, 21))
-            {
-                PodcastId = podcastOne.Id,
-            };
+            // Episodes for Podcast 1
+            Episode episodeOneA = new Episode("#1609 - Elon Musk", new DateTime(2021, 02, 21)) { PodcastId = podcastOne.Id };
+            Episode episodeOneB = new Episode("#1610 - Snowpocalypse with Tim Dillon", new DateTime(2021, 02, 26)) { PodcastId = podcastOne.Id };
+            Episode episodeOneC = new Episode("#1611 - Freddie Gibbs & Brian Moses", new DateTime(2021, 02, 28)) { PodcastId = podcastOne.Id };
 
-            Episode episodeTwo = new Episode("#1610 - Snowpocalypse with Tim Dillon", new DateTime(2021, 02, 26))
-            {
-                PodcastId = podcastOne.Id,
-            };
+            // Episodes for Podcast 2
+            Episode episodeTwoA = new Episode("How Not to Pitch a Billionaire", new DateTime(2014, 10, 16)) { PodcastId = podcastTwo.Id };
+            Episode episodeTwoB = new Episode("Is Podcasting the Future of Media?", new DateTime(2014, 10, 23)) { PodcastId = podcastTwo.Id };
+            Episode episodeTwoC = new Episode("How to Divide an Imaginary Pie", new DateTime(2014, 10, 30)) { PodcastId = podcastTwo.Id };
+
+            // Episodes for Podcast 3
+            Episode episodeThreeA = new Episode("Our Fitness Journey & Tips", new DateTime(2018, 04, 02)) { PodcastId = podcastThree.Id };
+            Episode episodeThreeB = new Episode("Balancing Health & Social Life", new DateTime(2018, 04, 09)) { PodcastId = podcastThree.Id };
+            Episode episodeThreeC = new Episode("Conquering Self-Doubt", new DateTime(2018, 04, 16)) { PodcastId = podcastThree.Id };
+
+            // Episodes for Podcast 4
+            Episode episodeFourA = new Episode("The Truth About Logan Paul", new DateTime(2018, 11, 19)) { PodcastId = podcastFour.Id };
+            Episode episodeFourB = new Episode("The Most Influential Woman on Earth", new DateTime(2018, 11, 26)) { PodcastId = podcastFour.Id };
+            Episode episodeFourC = new Episode("The Real Reason I Left Vine", new DateTime(2018, 12, 03)) { PodcastId = podcastFour.Id };
 
             if (!context.Episode.Any())
             {
-                context.Episode.Add(episodeOne);
-                context.Episode.Add(episodeTwo);
+                context.Episode.AddRange(new List<Episode>
+            {
+                episodeOneA, episodeOneB, episodeOneC,
+                episodeTwoA, episodeTwoB, episodeTwoC,
+                episodeThreeA, episodeThreeB, episodeThreeC,
+                episodeFourA, episodeFourB, episodeFourC
+            });
+
                 await context.SaveChangesAsync();
             }
 
             GuestArtist guestElonMusk = new GuestArtist("Elon Musk");
+            GuestArtist guestTimDillon = new GuestArtist("Tim Dillon");
+            GuestArtist guestFreddieGibbs = new GuestArtist("Freddie Gibbs & Brian Moses");
+
+            GuestArtist guestChrisSacca = new GuestArtist("Chris Sacca");
+            GuestArtist guestAndrewMason = new GuestArtist("Andrew Mason");
+            GuestArtist guestMattLieber = new GuestArtist("Matt Lieber");
+
+            GuestArtist guestKaylaItsines = new GuestArtist("Kayla Itsines");
+            GuestArtist guestStephanieButtermore = new GuestArtist("Stephanie Buttermore");
+            GuestArtist guestAmandaBucci = new GuestArtist("Amanda Bucci");
+
+            GuestArtist guestMikeMajlak = new GuestArtist("Mike Majlak");
+            GuestArtist guestCandaceOwens = new GuestArtist("Candace Owens");
+            GuestArtist guestBrittanyFurlan = new GuestArtist("Brittany Furlan");
+
+
             if (!context.GuestArtists.Any())
             {
-                context.GuestArtists.Add(guestElonMusk);
+                context.GuestArtists.AddRange(new List<GuestArtist>
+            {
+                guestElonMusk, guestTimDillon, guestFreddieGibbs,
+                guestChrisSacca, guestAndrewMason, guestMattLieber,
+                guestKaylaItsines, guestStephanieButtermore, guestAmandaBucci,
+                guestMikeMajlak, guestCandaceOwens, guestBrittanyFurlan
+            });
+
                 await context.SaveChangesAsync();
             }
-            GuestArtistEpisode guestArtistEpisodeOne = new GuestArtistEpisode(episodeOne.Id, guestElonMusk.Id);
+            // GuestArtistEpisode relationships for Podcast 1
+            GuestArtistEpisode guestArtistEpisodeOneA = new GuestArtistEpisode(episodeOneA.Id, guestElonMusk.Id);
+            GuestArtistEpisode guestArtistEpisodeOneB = new GuestArtistEpisode(episodeOneB.Id, guestTimDillon.Id);
+            GuestArtistEpisode guestArtistEpisodeOneC1 = new GuestArtistEpisode(episodeOneC.Id, guestFreddieGibbs.Id);
+
+            // GuestArtistEpisode relationships for Podcast 2
+            GuestArtistEpisode guestArtistEpisodeTwoA = new GuestArtistEpisode(episodeTwoA.Id, guestChrisSacca.Id);
+            GuestArtistEpisode guestArtistEpisodeTwoB = new GuestArtistEpisode(episodeTwoB.Id, guestAndrewMason.Id);
+            GuestArtistEpisode guestArtistEpisodeTwoC = new GuestArtistEpisode(episodeTwoC.Id, guestMattLieber.Id);
+
+            // GuestArtistEpisode relationships for Podcast 3
+            GuestArtistEpisode guestArtistEpisodeThreeA = new GuestArtistEpisode(episodeThreeA.Id, guestKaylaItsines.Id);
+            GuestArtistEpisode guestArtistEpisodeThreeB = new GuestArtistEpisode(episodeThreeB.Id, guestStephanieButtermore.Id);
+            GuestArtistEpisode guestArtistEpisodeThreeC = new GuestArtistEpisode(episodeThreeC.Id, guestAmandaBucci.Id);
+
+            // GuestArtistEpisode relationships for Podcast 4
+            GuestArtistEpisode guestArtistEpisodeFourA = new GuestArtistEpisode(episodeFourA.Id, guestMikeMajlak.Id);
+            GuestArtistEpisode guestArtistEpisodeFourB = new GuestArtistEpisode(episodeFourB.Id, guestCandaceOwens.Id);
+            GuestArtistEpisode guestArtistEpisodeFourC = new GuestArtistEpisode(episodeFourC.Id, guestBrittanyFurlan.Id);
+
             if (!context.GuestArtistEpisodes.Any())
             {
-                episodeOne.GuestArtistEpisodes.Add(guestArtistEpisodeOne);
+                context.GuestArtistEpisodes.AddRange(new List<GuestArtistEpisode>
+            {
+                guestArtistEpisodeOneA, guestArtistEpisodeOneB, guestArtistEpisodeOneC1,
+                guestArtistEpisodeTwoA, guestArtistEpisodeTwoB, guestArtistEpisodeTwoC,
+                guestArtistEpisodeThreeA, guestArtistEpisodeThreeB, guestArtistEpisodeThreeC,
+                guestArtistEpisodeFourA, guestArtistEpisodeFourB, guestArtistEpisodeFourC
+            });
+
                 await context.SaveChangesAsync();
             }
+
 
             ListenerList enjaeListener = new ListenerList("Enjae Antonio Listener List");
             ListenerList kinahListener = new ListenerList("Kinah Javier Listener List");
@@ -236,10 +334,23 @@ namespace CodeFirstMusicSystem.Models
                 await context.SaveChangesAsync();
             }
 
-            PodcastListenerList podcastListenerListOne = new PodcastListenerList(podcastOne.Id, enjaeListener.Id);
+            PodcastListenerList podcastListenerListOne = new PodcastListenerList(podcastOne.Id, kinahListener.Id);
+            PodcastListenerList podcastListenerListTwo = new PodcastListenerList(podcastTwo.Id, kinahListener.Id);
+            PodcastListenerList podcastListenerListThree = new PodcastListenerList(podcastThree.Id, enjaeListener.Id);
+            PodcastListenerList podcastListenerListFour = new PodcastListenerList(podcastFour.Id, enjaeListener.Id);
             if (!context.PodcastListenerLists.Any())
             {
+
+                podcastOne.PodcastListenerLists.Add(podcastListenerListOne);
+                podcastTwo.PodcastListenerLists.Add(podcastListenerListTwo);
+                podcastThree.PodcastListenerLists.Add(podcastListenerListThree);
+                podcastFour.PodcastListenerLists.Add(podcastListenerListFour);
                 context.PodcastListenerLists.Add(podcastListenerListOne);
+                context.PodcastListenerLists.Add(podcastListenerListTwo);
+                context.PodcastListenerLists.Add(podcastListenerListThree);
+                context.PodcastListenerLists.Add(podcastListenerListFour);
+
+
                 await context.SaveChangesAsync();
             }
 

@@ -9,10 +9,8 @@
 
 <form asp-action="AddToListenerList" method="post">
     <div class="form-group">
-        <label asp-for="PodcastId">Select Podcast:</label>
-        <select asp-for="PodcastId" asp-items="@(new SelectList(Model.Podcasts, "Id", "Title"))" class="form-control">
-            <option value="">-- Choose a podcast --</option>
-        </select>
+        <label asp-for="PodcastId">Podcast</label>
+        <h1>@Model.Podcasts.FirstOrDefault(p => p.Id == Model.PodcastId)?.Title</h1>
     </div>
 
     <div class="form-group">
