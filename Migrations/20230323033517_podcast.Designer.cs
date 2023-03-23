@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeFirstMusicSystem.Migrations
 {
     [DbContext(typeof(MusicSystemContext))]
-    [Migration("20230323021343_podcastandTrackNumber")]
-    partial class podcastandTrackNumber
+    [Migration("20230323033517_podcast")]
+    partial class podcast
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,9 +77,6 @@ namespace CodeFirstMusicSystem.Migrations
 
                     b.Property<DateTime>("AirDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("DurationSeconds")
-                        .HasColumnType("int");
 
                     b.Property<int?>("GuestArtistId")
                         .HasColumnType("int");

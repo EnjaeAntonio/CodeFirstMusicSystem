@@ -24,17 +24,17 @@ namespace CodeFirstMusicSystem.Models
 
         [Required(ErrorMessage = "Album ID is required.")]
         public int AlbumId { get; set; }
-
+        [Required(ErrorMessage = "Duration is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Duration must be a positive value.")]
+        [Display(Name = "Duration Seconds")]
+        public int DurationSeconds { get; set; }
         public int TrackSong { get; set; }
         public virtual ICollection<SongContributor> SongContributors { get; set; } = new HashSet<SongContributor>();
         public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; } = new HashSet<PlaylistSong>();
 
         // podcasts artists M to M
         // podcast to L.L M to M
-        [Required(ErrorMessage = "Duration is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Duration must be a positive value.")]
-        [Display(Name = "Duration Seconds")]
-        public int DurationSeconds { get; set; }
+  
 
         public Song()
         {
@@ -57,7 +57,7 @@ namespace CodeFirstMusicSystem.Models
 
         [Display(Name = "Date Aired")]
         public DateTime AirDate { get; set; }
-        
+ 
         public virtual Podcast Podcast { get; set; }
         public int PodcastId { get; set; }
         public ICollection<GuestArtistEpisode> GuestArtistEpisodes { get; set; } = new HashSet<GuestArtistEpisode>();

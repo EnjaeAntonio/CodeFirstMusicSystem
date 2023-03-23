@@ -57,7 +57,7 @@ namespace CodeFirstMusicSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AirDate,PodcastId,Title,DurationSeconds")] Episode episode)
+        public async Task<IActionResult> Create([Bind("Id,AirDate,PodcastId,Title")] Episode episode)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace CodeFirstMusicSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AirDate,PodcastId,Title,DurationSeconds")] Episode episode)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AirDate,PodcastId,Title")] Episode episode)
         {
             if (id != episode.Id)
             {

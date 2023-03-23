@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CodeFirstMusicSystem.Migrations
 {
-    public partial class podcastandTrackNumber : Migration
+    public partial class podcast : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,9 +80,9 @@ namespace CodeFirstMusicSystem.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AddListenerListViewModelId = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,8 +103,7 @@ namespace CodeFirstMusicSystem.Migrations
                     AirDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PodcastId = table.Column<int>(type: "int", nullable: false),
                     GuestArtistId = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DurationSeconds = table.Column<int>(type: "int", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
