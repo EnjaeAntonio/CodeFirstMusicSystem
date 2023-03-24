@@ -17,7 +17,6 @@ namespace CodeFirstMusicSystem.Models
 
     public class Song : Media
     {
-        public int Id { get; set; }
 
         [Required(ErrorMessage = "Album is required.")]
 
@@ -56,7 +55,6 @@ namespace CodeFirstMusicSystem.Models
     }
     public class Episode : Media
     {
-        public int Id { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

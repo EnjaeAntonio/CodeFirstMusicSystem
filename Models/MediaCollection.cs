@@ -20,7 +20,6 @@ namespace CodeFirstMusicSystem.Models
 
     public class Album : MediaCollection
     {
-        public int Id { get; set; }
         public virtual ICollection<Song> Songs { get; set; } = new HashSet<Song>();
         public Album()
         {
@@ -33,10 +32,9 @@ namespace CodeFirstMusicSystem.Models
         }
     }
 
+
     public class Podcast : MediaCollection
     {
-        public int Id { get; set; }
-
         public ICollection<Episode> Episodes { get; set; } = new HashSet<Episode>();
         public ICollection<PodcastCastArtist> PodcastCastArtists { get; set; } = new HashSet<PodcastCastArtist>();
         public ICollection<PodcastListenerList> PodcastListenerLists { get; set; } = new HashSet<PodcastListenerList>();
