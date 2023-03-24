@@ -77,7 +77,8 @@ namespace CodeFirstMusicSystem.Controllers
         public IActionResult Create()
         {
             ViewData["AlbumId"] = new SelectList(_context.Album, "Id", "Id");
-            return View();
+            ViewData["ArtistId"] = new SelectList(_context.Artist, "Id", "Name");
+            return View(new CreateSongViewModel());
         }
 
         // POST: Songs/Create
@@ -85,16 +86,20 @@ namespace CodeFirstMusicSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,DurationSeconds,AlbumId")] Song song)
+        public async Task<IActionResult> Create([Bind("Id,Title,DurationSeconds,AlbumId,ArtistId")] CreateSongViewModel createSongViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(song);
+                _context.Add(createSongViewModel.Song);
+                await _context.SaveChangesAsync();
+                SongContributor songContributor = new SongContributor(createSongViewModel.ArtistId, createSongViewModel.Song.Id);
+                _context.SongContributor.Add(songContributor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlbumId"] = new SelectList(_context.Album, "Id", "Id", song.AlbumId);
-            return View(song);
+            ViewData["AlbumId"] = new SelectList(_context.Album, "Id", "Id", createSongViewModel.Song.AlbumId);
+            ViewData["ArtistId"] = new SelectList(_context.Artist, "Id", "Name", createSongViewModel.ArtistId);
+            return View(createSongViewModel);
         }
 
         // GET: Songs/Edit/5

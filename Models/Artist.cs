@@ -1,9 +1,16 @@
-﻿namespace CodeFirstMusicSystem.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace CodeFirstMusicSystem.Models
 {
 
     public class BaseArtist 
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Artist name is required.")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Name must be between 1 and 50 characters.")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
     }
     public class Artist : BaseArtist
@@ -34,8 +41,6 @@
     public class PodcastArtist : BaseArtist
     {
         public ICollection<PodcastCastArtist> PodcastCastArtists { get; set; }
-
-
         public PodcastArtist() { }
         public PodcastArtist(string name)
         {

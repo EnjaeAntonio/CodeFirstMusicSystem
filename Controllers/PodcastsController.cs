@@ -46,9 +46,36 @@ namespace CodeFirstMusicSystem.Controllers
 
             podcast.Episodes = podcast.Episodes.OrderByDescending(e => e.AirDate).ToList();
 
-            return View(podcast);
+            PodcastEpisodeViewModel viewModel = new PodcastEpisodeViewModel
+            {
+                SelectedEpisodeId = 0,
+                Podcast = podcast,
+                Episodes = podcast.Episodes
+            };
+
+            return View(viewModel);
+
         }
 
+        [HttpPost]
+        public IActionResult Details(int id, PodcastEpisodeViewModel viewModel)
+        {
+            if (id != viewModel.SelectedEpisodeId)
+            {
+                return NotFound();
+            }
+
+            var selectedEpisode = _context.Episode.FirstOrDefault(e => e.Id == viewModel.SelectedEpisodeId);
+
+            if (selectedEpisode == null)
+            {
+                return NotFound();
+            }
+
+            // Do something with the selected episode
+
+            return RedirectToAction("Index", "Home");
+        }
 
         public IActionResult AddToListenerList(int podcastId)
         {
