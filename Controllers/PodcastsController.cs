@@ -80,7 +80,7 @@ namespace CodeFirstMusicSystem.Controllers
         public IActionResult AddToListenerList(int podcastId)
         {
             // Get the podcast by its Id
-            var podcast = _context.Podcast.FirstOrDefault(p => p.Id == podcastId);
+            Podcast podcast = _context.Podcast.FirstOrDefault(p => p.Id == podcastId);
 
             if (podcast == null)
             {
@@ -88,7 +88,7 @@ namespace CodeFirstMusicSystem.Controllers
             }
 
             // Get all listener lists
-            var allListenerLists = _context.ListenerList.ToList();
+            List<ListenerList> allListenerLists = _context.ListenerList.ToList();
 
             var existingListenerLists = _context.PodcastListenerLists
                 .Where(pll => pll.PodcastId == podcastId)
