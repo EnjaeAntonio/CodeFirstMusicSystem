@@ -1,4 +1,5 @@
-# CodeFirstMusicSystem
+# # <h1 align="center">Code First Music System</h1>
+
 
 This repo is a Full Stack version of a Spotify-like application using the code-first approach. The aim is to create a database that handles songs, albums, artists, playlists, and also podcasts. The code also has a Seed Method to initialize the application with sample data.
 
