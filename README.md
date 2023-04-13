@@ -1,25 +1,28 @@
-# # <h1 align="center">Code First Music System</h1>
+# <h1 align="center">Code First Music System</h1>
 
+### Table of contents
+- [Database Design](#Database-design)
+- [Seed Method](#Seed-Method)
+- [Images](#Images)
 
 This repo is a Full Stack version of a Spotify-like application using the code-first approach. The aim is to create a database that handles songs, albums, artists, playlists, and also podcasts. The code also has a Seed Method to initialize the application with sample data.
 
 ## Database Design
 ![Images](Assets/Images/MusicSystemDiagram.png)
 
+- **Artist:** one-to-many relationship with the SongContributor and Album models.
 
-**Artist:** one-to-many relationship with the SongContributor and Album models.
+- **GuestArtist:** one-to-many relationship with the Episode model.
 
-**GuestArtist:** one-to-many relationship with the Episode model.
+- **PodcastArtist:** many-to-many relationship with the PodcastCastArtist and Podcast models.
 
-**PodcastArtist:** many-to-many relationship with the PodcastCastArtist and Podcast models.
+- **Song:** one-to-many relationship with the SongContributor and PlaylistSong models, and many-to-one relationship with the Album model.
 
-**Song:** one-to-many relationship with the SongContributor and PlaylistSong models, and many-to-one relationship with the Album model.
+- **Episode:** many-to-one relationship with the Podcast model, and many-to-many relationship with the GuestArtist model.
 
-**Episode:** many-to-one relationship with the Podcast model, and many-to-many relationship with the GuestArtist model.
+- **MediaCollection:** one-to-many relationship with the Album and Podcast models.
 
-**MediaCollection:** one-to-many relationship with the Album and Podcast models.
-
-**Playlist:** one-to-many relationship with the PlaylistSong model.
+- **Playlist:** one-to-many relationship with the PlaylistSong model.
 Utilized:
 
 ## Seed Method
