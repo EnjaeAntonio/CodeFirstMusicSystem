@@ -59,10 +59,10 @@ Here is a sneak peek of images showcasing the code!
 
 ### Playlists
 
-![Images]()
+![Images](Assets/Images/PlaylistIndex.png)
 
 ### Add Song to a playlist
 
-![Images]()
+![Images](Assets/Images/AddSongToPlaylist.png)
 
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
