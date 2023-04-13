@@ -1,4 +1,4 @@
-# <h1 align="center">Code First Music System</h1>
+# <h1 align="center">Code First Music System </h1>
 
 ### Table of contents
 - [Database Design](#Database-design)
@@ -6,6 +6,8 @@
 - [Images](#Images)
 
 This repo is a Full Stack version of a Spotify-like application using the code-first approach. The aim is to create a database that handles songs, albums, artists, playlists, and also podcasts. The code also has a Seed Method to initialize the application with sample data.
+
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
 
 ## Database Design
 ![Images](Assets/Images/MusicSystemDiagram.png)
@@ -23,7 +25,6 @@ This repo is a Full Stack version of a Spotify-like application using the code-f
 - **MediaCollection:** one-to-many relationship with the Album and Podcast models.
 
 - **Playlist:** one-to-many relationship with the PlaylistSong model.
-Utilized:
 
 ## Seed Method
 This code is a Seed method that is responsible for initializing the MusicSystemContext database with some sample data. The method **creates** three Artist objects and adds them to the context if they don't already exist in the database. The method **ensures** that the database is created and migrated before adding the sample data to it. The **purpose** of this method is to provide initial data to the application so that it can be used during development and testing. 
@@ -52,7 +53,6 @@ This code is a Seed method that is responsible for initializing the MusicSystemC
 ```
 
 ## Images
-Here is a sneak peek of images showcasing the code!
 
 ### Artists
 
@@ -70,4 +70,3 @@ Here is a sneak peek of images showcasing the code!
 
 ![Images](Assets/Images/AddSongToPlaylist.png)
 
-![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
