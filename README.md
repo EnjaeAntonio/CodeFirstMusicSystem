@@ -1,8 +1,9 @@
 # CodeFirstMusicSystem
 
-This repo is a Full Stack version of a Spotify-like application using the code-first approach. The aim is to create a database that handles songs, albums, artists, and playlists. The project requires creating the User Interface, which includes pages for Playlists, Artists, Albums, Album Details, and Songs. The project must also have a Seed Method to initialize the application with sample data. The project specifies that playlists may be created by any user, and users and libraries are not included in this version.
+This repo is a Full Stack version of a Spotify-like application using the code-first approach. The aim is to create a database that handles songs, albums, artists, playlists, and also podcasts. The code also has a Seed Method to initialize the application with sample data.
 
 ## Database Design
+![Images](Assets/Images/MusicSystemDiagram.png)
 
 
 **Artist:** one-to-many relationship with the SongContributor and Album models.
